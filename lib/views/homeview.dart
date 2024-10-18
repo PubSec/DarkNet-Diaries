@@ -97,7 +97,7 @@ class _FileContentListViewState extends State<FileContentListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: items.length,
+      itemCount: 1,
       itemBuilder: (context, index) {
         final itemUrl = items[index];
         return ListTile(

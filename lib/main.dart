@@ -1,4 +1,5 @@
 import 'package:darknet_diaries/views/homeview.dart';
+import 'package:darknet_diaries/widgets/animatedtile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         useMaterial3: true,
       ),
-      home: const HomeView(),
+      home: const AnimWidget(),
     );
   }
 }

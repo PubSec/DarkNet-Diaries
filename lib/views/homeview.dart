@@ -13,14 +13,22 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  var backgroundColors = <Color>[Colors.black,Colors.red];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: const Text('Darknet Diaries'),
         centerTitle: true,
       ),
-      body: const FileContentListView(),
+      body:  Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.black,Colors.red.shade300],end: Alignment.bottomLeft)),
+        child: FileContentListView(
+          
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(elevation:0 ,backgroundColor:  Colors.transparent,items: const [BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),BottomNavigationBarItem(icon: Icon(Icons.file_download_done),label: "Downloads")]),
     );
   }
 }
@@ -53,6 +61,7 @@ class _FileContentListViewState extends State<FileContentListView> {
       });
       return null; // Return null if paused
     } else {
+      print(url);
       await player.play(UrlSource(url)); // Play the new item
 
       setState(() {
@@ -77,6 +86,7 @@ class _FileContentListViewState extends State<FileContentListView> {
       if (await file.exists()) {
         await file.delete();
       }
+      
 
       // Download the file
       await dio.download(
@@ -97,7 +107,7 @@ class _FileContentListViewState extends State<FileContentListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 1,
+      itemCount: items.length,
       itemBuilder: (context, index) {
         final itemUrl = items[index];
         return ListTile(
@@ -110,6 +120,8 @@ class _FileContentListViewState extends State<FileContentListView> {
           trailing: IconButton(
             onPressed: () {
               togglePlayPause(itemUrl, index);
+              print(itemUrl);
+
             },
             icon: playingIndex == index
                 ? const Icon(CupertinoIcons.pause)

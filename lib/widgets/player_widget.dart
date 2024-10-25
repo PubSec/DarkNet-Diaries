@@ -1,132 +1,144 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PlayerWigdet extends StatefulWidget {
-  const PlayerWigdet({super.key});
+class PlayerWidget extends StatefulWidget {
+  const PlayerWidget({super.key});
 
   @override
-  State<PlayerWigdet> createState() => _PlayerWigdetState();
+  State<PlayerWidget> createState() => _PlayerWidgetState();
 }
 
-class _PlayerWigdetState extends State<PlayerWigdet> {
-  double turns = 1;
-  double height = 60;
-  double width = 300;
-  double bottomHeight = 0;
+class _PlayerWidgetState extends State<PlayerWidget> {
+  double iconTurns = 1;
+  double parentContainerHeight = 80;
+  double bottomContainerHeight = 50;
+  double sliderValue = 0.0; // Slider value
+
+  void _togglePlayerSize() {
+    setState(() {
+      iconTurns = iconTurns == 0.5 ? 1 : 0.5;
+      parentContainerHeight = parentContainerHeight == 130 ? 80 : 130;
+      bottomContainerHeight = bottomContainerHeight == 400 ? 50 : 400;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: AnimatedContainer(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Colors.black),
-          duration: const Duration(
-            milliseconds: 400,
-          ),
-          height: height,
-          width: width,
+          color: Colors.transparent,
+          width: 400,
+          height: parentContainerHeight,
+          duration: const Duration(milliseconds: 200),
           child: Stack(
             children: [
               AnimatedContainer(
-                duration: const Duration(milliseconds: 400),
-                height: bottomHeight,
-                width: width,
+                width: 400,
+                height: bottomContainerHeight,
                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 121, 28, 28),
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.green,
                 ),
-                child: const SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Icon(
-                        CupertinoIcons.play,
-                        color: Colors.white,
+                duration: const Duration(milliseconds: 400),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Slider(
+                          value: sliderValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              sliderValue = newValue;
+                            });
+                          },
+                          min: 0.0,
+                          max: 100,
+                          divisions: 100,
+                          activeColor: Colors.red,
+                          inactiveColor: Colors.black,
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.only(left: 30),
+                      iconSize: 30,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
                       ),
-                      Icon(
-                        CupertinoIcons.play,
-                        color: Colors.white,
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.only(top: 2),
+                      iconSize: 45,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.play_arrow,
                       ),
-                      Icon(
-                        CupertinoIcons.play,
-                        color: Colors.white,
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.only(right: 10),
+                      iconSize: 30,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
                       ),
-                      Icon(
-                        CupertinoIcons.play,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        CupertinoIcons.play,
-                        color: Colors.white,
-                      ),
-                      Icon(CupertinoIcons.pause),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                width: width,
-                height: height,
+              AnimatedContainer(
+                width: 400,
+                height: 80,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.transparent),
-                child: const Center(
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                            'assets/axe.jpg',
-                          ),
-                          radius: 20,
-                        ),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                duration: const Duration(milliseconds: 200),
+                child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage('assets/asrtronout.jpg'),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Episode Number',
-                              style: TextStyle(fontSize: 22),
-                            ),
-                            Text(
-                              'Episode Name',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            )
-                          ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Episode Number',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                      )
-                    ],
-                  ),
+                        Text('Episode Name'),
+                        Text("00:00")
+                      ],
+                    )
+                  ],
                 ),
               ),
               Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 5, bottom: 5),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: _togglePlayerSize,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 18),
                     child: AnimatedRotation(
-                      turns: turns,
-                      duration: const Duration(microseconds: 1000),
+                      turns: iconTurns,
+                      duration: const Duration(milliseconds: 200),
                       child: const Icon(CupertinoIcons.chevron_down),
                     ),
-                    onTap: () {
-                      setState(() {
-                        turns = turns == 0.5 ? 1 : 0.5;
-                        bottomHeight = bottomHeight == 0 ? 140 : 0;
-                      });
-                    },
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

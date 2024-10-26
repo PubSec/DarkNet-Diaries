@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class PlayerWidget extends StatefulWidget {
   const PlayerWidget({super.key});
@@ -13,6 +14,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double parentContainerHeight = 80;
   double bottomContainerHeight = 50;
   double sliderValue = 0.0; // Slider value
+  int randomInt = Random().nextInt(187);
 
   void _togglePlayerSize() {
     setState(() {
@@ -99,17 +101,17 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 duration: const Duration(milliseconds: 200),
-                child: const Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage('assets/asrtronout.jpg'),
+                        backgroundImage: AssetImage('assets/image$randomInt'),
                       ),
                     ),
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

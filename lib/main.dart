@@ -1,5 +1,4 @@
 import 'package:darknet_diaries/views/home_view.dart';
-import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         useMaterial3: true,
       ),
-      home: const PlayerWidget(),
+      home: const HomeView(),
     );
   }
 }

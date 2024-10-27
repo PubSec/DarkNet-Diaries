@@ -26,123 +26,130 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AnimatedContainer(
-          color: Colors.transparent,
-          width: 400,
-          height: parentContainerHeight,
-          duration: const Duration(milliseconds: 200),
-          child: Stack(
-            children: [
-              AnimatedContainer(
-                width: 400,
-                height: bottomContainerHeight,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 121, 28, 28),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                duration: const Duration(milliseconds: 400),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Slider(
-                          value: sliderValue,
-                          onChanged: (newValue) {
-                            setState(() {
-                              sliderValue = newValue;
-                            });
-                          },
-                          min: 0.0,
-                          max: 100,
-                          divisions: 100,
-                          activeColor: Colors.red,
-                          inactiveColor: Colors.black,
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.only(left: 30),
-                      iconSize: 30,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                      ),
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.only(top: 2),
-                      iconSize: 45,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.play_arrow,
-                      ),
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.only(right: 10),
-                      iconSize: 30,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                      ),
-                    ),
-                  ],
-                ),
+    return SafeArea(
+      child: AnimatedContainer(
+        color: Colors.transparent,
+        width: 400,
+        height: parentContainerHeight,
+        duration: const Duration(milliseconds: 200),
+        child: Stack(
+          children: [
+            AnimatedContainer(
+              width: 400,
+              height: bottomContainerHeight,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 121, 28, 28),
+                borderRadius: BorderRadius.circular(20),
               ),
-              AnimatedContainer(
-                width: 400,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                duration: const Duration(milliseconds: 200),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage('assets/image$randomInt'),
+              duration: const Duration(milliseconds: 400),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Slider(
+                        value: sliderValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            sliderValue = newValue;
+                          });
+                        },
+                        min: 0.0,
+                        max: 100,
+                        divisions: 100,
+                        activeColor: Colors.red,
+                        inactiveColor: Colors.black,
                       ),
+                    ],
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(left: 30),
+                    iconSize: 30,
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
                     ),
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Episode Number',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        Text('Episode Name'),
-                        Text("00:00")
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(top: 2),
+                    iconSize: 45,
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.play_arrow,
+                    ),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(right: 10),
+                    iconSize: 30,
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                    ),
+                  ),
+                ],
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: _togglePlayerSize,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 18),
-                    child: AnimatedRotation(
-                      turns: iconTurns,
-                      duration: const Duration(milliseconds: 200),
-                      child: const Icon(CupertinoIcons.chevron_down),
+            ),
+            AnimatedContainer(
+              width: 400,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              duration: const Duration(milliseconds: 200),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/image$randomInt.jpg'),
+                    ),
+                  ),
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Episode Number',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text('Episode Name'),
+                      Text("00:00")
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                splashColor: Colors.black,
+                onTap: _togglePlayerSize,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 18, top: 29),
+                  child: AnimatedRotation(
+                    turns: iconTurns,
+                    duration: const Duration(milliseconds: 200),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade800,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.chevron_down,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

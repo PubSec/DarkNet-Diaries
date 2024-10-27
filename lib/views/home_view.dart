@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -13,7 +13,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  var backgroundColors = <Color>[Colors.black,Colors.red];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +22,7 @@ class _HomeViewState extends State<HomeView> {
         title: const Text('Darknet Diaries'),
         centerTitle: true,
       ),
-      body:  Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.black,Colors.red.shade300],end: Alignment.bottomLeft)),
-        child: FileContentListView(
-          
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(elevation:0 ,backgroundColor:  Colors.transparent,items: const [BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),BottomNavigationBarItem(icon: Icon(Icons.file_download_done),label: "Downloads")]),
+      body: const FileContentListView(),
     );
   }
 }
@@ -86,7 +80,6 @@ class _FileContentListViewState extends State<FileContentListView> {
       if (await file.exists()) {
         await file.delete();
       }
-      
 
       // Download the file
       await dio.download(
@@ -110,26 +103,8 @@ class _FileContentListViewState extends State<FileContentListView> {
       itemCount: items.length,
       itemBuilder: (context, index) {
         final itemUrl = items[index];
-        return ListTile(
-          title: Text(
-            itemUrl
-                .substring(itemUrl.indexOf('ep'))
-                .replaceAll('-', ' ')
-                .toUpperCase(),
-          ),
-          trailing: IconButton(
-            onPressed: () {
-              togglePlayPause(itemUrl, index);
-              print(itemUrl);
-
-            },
-            icon: playingIndex == index
-                ? const Icon(CupertinoIcons.pause)
-                : const Icon(CupertinoIcons.play),
-          ),
-        );
+        return const PlayerWidget();
       },
     );
   }
 }
-

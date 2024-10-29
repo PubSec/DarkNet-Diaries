@@ -14,7 +14,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double parentContainerHeight = 80;
   double bottomContainerHeight = 50;
   double sliderValue = 0.0; // Slider value
-  int randomInt = Random().nextInt(187);
+  int randomInt = Random().nextInt(185);
 
   void _togglePlayerSize() {
     setState(() {
@@ -106,8 +106,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CircleAvatar(
+                      backgroundImage: const AssetImage('assets/image7.jpg'),
                       radius: 30,
-                      backgroundImage: AssetImage('assets/image$randomInt.jpg'),
+                      foregroundImage: AssetImage('assets/image$randomInt.jpg'),
                     ),
                   ),
                   const Column(

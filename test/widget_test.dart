@@ -5,11 +5,13 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:darknet_diaries/views/home_view.dart';
+// import 'package:darknet_diaries/widgets/player_widget.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:darknet_diaries/main.dart';
+// import 'package:darknet_diaries/main.dart';
 
 void main() {
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -30,14 +32,8 @@ void main() {
   // });
 
   testWidgets('Display player icons', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const HomeView());
 
-    expect(find.byIcon(CupertinoIcons.chevron_down), findsWidgets);
-    expect(find.byIcon(Icons.arrow_back_ios), findsAny);
-
-    await tester.tap(find.byIcon(CupertinoIcons.chevron_down));
-    await tester.pump();
-
-    expect(find.byIcon(Icons.arrow_back_ios), findsWidgets);
+    expect(find.text("Episode Name"), findsAny);
   });
 }

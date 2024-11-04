@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+// ignore: must_be_immutable
 class PlayerWidget extends StatefulWidget {
-  const PlayerWidget({super.key});
+  String episodeName;
+  String episodeNumber;
+  PlayerWidget(
+      {super.key, required this.episodeName, required this.episodeNumber});
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -15,6 +20,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double bottomContainerHeight = 50;
   double sliderValue = 0.0; // Slider value
   int randomInt = Random().nextInt(185);
+  dynamic episodeList = [];
 
   void _togglePlayerSize() {
     setState(() {
@@ -22,6 +28,20 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       parentContainerHeight = parentContainerHeight == 130 ? 80 : 130;
       bottomContainerHeight = bottomContainerHeight == 400 ? 50 : 400;
     });
+  }
+
+  Future<void> fetchRemoteData() async {
+    const String link =
+        'https://darknetdiaries.com/darknet-diaries-all-episode-links.txt';
+
+    try {
+      var response = await Dio().get(link);
+
+      if (response.statusCode == 200) {
+        // Assuming the response data is a newline-separated string
+        List<String> lines = (response.data as String).split('\n');
+      }
+    } catch (e) {}
   }
 
   @override
@@ -111,17 +131,17 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                       foregroundImage: AssetImage('assets/image$randomInt.jpg'),
                     ),
                   ),
-                  const Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Episode Number',
-                        style: TextStyle(
+                        widget.episodeName,
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Text('Episode Name'),
-                      Text("00:00")
+                      Text(widget.episodeNumber),
+                      const Text("00:00")
                     ],
                   )
                 ],
@@ -156,3 +176,71 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     );
   }
 }
+
+// class RemoteDataModel {
+//   String episodeName;
+//   String episodeNumber;
+//   String episodeLink;
+//   Duration episodeDuration;
+
+//   RemoteDataModel({
+//     required this.episodeName,
+//     required this.episodeNumber,
+//     required this.episodeLink,
+//     required this.episodeDuration,
+//   });
+// }
+
+// Future<List<RemoteDataModel>> fetchRemoteData() async {
+//   const String link =
+//       'https://darknetdiaries.com/darknet-diaries-all-episode-links.txt';
+
+//   try {
+//     var response = await Dio().get(link);
+
+//     if (response.statusCode == 200) {
+//       List<RemoteDataModel> episodeList = [];
+
+//       // Assuming the response data is a newline-separated string
+//       List<String> lines = (response.data as String).split('\n');
+
+//       for (String line in lines) {
+//         // Parse each line into an episode (customize this based on actual data format)
+//         if (line.isNotEmpty) {
+//           // Example parsing, adjust according to the actual data format
+//           var parts = line.split('|'); // Assuming '|' is the delimiter
+//           if (parts.length >= 4) {
+//             String episodeName = parts[0];
+//             String episodeNumber = parts[1];
+//             String episodeLink = parts[2];
+//             Duration episodeDuration = Duration(
+//                 minutes:
+//                     int.parse(parts[3])); // Assuming duration is in minutes
+
+//             episodeList.add(RemoteDataModel(
+//               episodeName: episodeName,
+//               episodeNumber: episodeNumber,
+//               episodeLink: episodeLink,
+//               episodeDuration: episodeDuration,
+//             ));
+//           }
+//         }
+//       }
+
+//       // Update your state with the fetched episodeList
+//       // You might want to replace this with a proper state management solution
+//       setState(() {
+//         // Assuming you're in a StatefulWidget
+//         this.episodeList = episodeList;
+//       });
+
+//       return episodeList;
+//     } else {
+//       print('Error: ${response.statusCode}');
+//       return [];
+//     }
+//   } catch (e) {
+//     print('Exception: $e');
+//     return [];
+//   }
+// }

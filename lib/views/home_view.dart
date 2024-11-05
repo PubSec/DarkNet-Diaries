@@ -1,3 +1,4 @@
+import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
         });
         print("length = ${episodeList.length}");
       } else {
-        print('Error: ${response.statusCode}');
+        showAboutDialog(context: context);
       }
     } catch (e) {
       print('Exception: $e');
@@ -35,19 +36,27 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Darknet Diaries'),
+        title: const Text(
+          'Darknet Diaries',
+          style: TextStyle(
+            letterSpacing: 4,
+            leadingDistribution: TextLeadingDistribution.even,
+          ),
+        ),
         centerTitle: true,
       ),
       body: RefreshIndicator(
+        // #fe0002
+        color: darknetRed,
         onRefresh: fetchEpisodeList,
         child: episodeList.isEmpty
             ? RefreshIndicator(
                 onRefresh: fetchEpisodeList,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.only(
                       top: MediaQuery.sizeOf(context).width / 2),
-                  child: Center(
+                  child: const Center(
                     child: Text('Try refreshing the page'),
                   ),
                 ),

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -30,20 +30,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     });
   }
 
-  Future<void> fetchRemoteData() async {
-    const String link =
-        'https://darknetdiaries.com/darknet-diaries-all-episode-links.txt';
-
-    try {
-      var response = await Dio().get(link);
-
-      if (response.statusCode == 200) {
-        // Assuming the response data is a newline-separated string
-        List<String> lines = (response.data as String).split('\n');
-      }
-    } catch (e) {}
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +44,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               width: 400,
               height: bottomContainerHeight,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 121, 28, 28),
+                color: darknetRed,
                 borderRadius: BorderRadius.circular(20),
               ),
               duration: const Duration(milliseconds: 400),
@@ -80,8 +66,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                         min: 0.0,
                         max: 100,
                         divisions: 100,
-                        activeColor: Colors.red,
-                        inactiveColor: Colors.black,
+                        activeColor: darknetRed,
+                        inactiveColor: darknetBlack,
                       ),
                     ],
                   ),
@@ -116,7 +102,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               width: 400,
               height: 80,
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: darknetBlack,
                 borderRadius: BorderRadius.circular(20),
               ),
               duration: const Duration(milliseconds: 200),
@@ -150,7 +136,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                splashColor: Colors.black,
+                splashColor: darknetBlack,
                 onTap: _togglePlayerSize,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 18, top: 29),
@@ -159,7 +145,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     duration: const Duration(milliseconds: 200),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade800,
+                        color: darknetGrey,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: const Icon(
@@ -176,71 +162,3 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     );
   }
 }
-
-// class RemoteDataModel {
-//   String episodeName;
-//   String episodeNumber;
-//   String episodeLink;
-//   Duration episodeDuration;
-
-//   RemoteDataModel({
-//     required this.episodeName,
-//     required this.episodeNumber,
-//     required this.episodeLink,
-//     required this.episodeDuration,
-//   });
-// }
-
-// Future<List<RemoteDataModel>> fetchRemoteData() async {
-//   const String link =
-//       'https://darknetdiaries.com/darknet-diaries-all-episode-links.txt';
-
-//   try {
-//     var response = await Dio().get(link);
-
-//     if (response.statusCode == 200) {
-//       List<RemoteDataModel> episodeList = [];
-
-//       // Assuming the response data is a newline-separated string
-//       List<String> lines = (response.data as String).split('\n');
-
-//       for (String line in lines) {
-//         // Parse each line into an episode (customize this based on actual data format)
-//         if (line.isNotEmpty) {
-//           // Example parsing, adjust according to the actual data format
-//           var parts = line.split('|'); // Assuming '|' is the delimiter
-//           if (parts.length >= 4) {
-//             String episodeName = parts[0];
-//             String episodeNumber = parts[1];
-//             String episodeLink = parts[2];
-//             Duration episodeDuration = Duration(
-//                 minutes:
-//                     int.parse(parts[3])); // Assuming duration is in minutes
-
-//             episodeList.add(RemoteDataModel(
-//               episodeName: episodeName,
-//               episodeNumber: episodeNumber,
-//               episodeLink: episodeLink,
-//               episodeDuration: episodeDuration,
-//             ));
-//           }
-//         }
-//       }
-
-//       // Update your state with the fetched episodeList
-//       // You might want to replace this with a proper state management solution
-//       setState(() {
-//         // Assuming you're in a StatefulWidget
-//         this.episodeList = episodeList;
-//       });
-
-//       return episodeList;
-//     } else {
-//       print('Error: ${response.statusCode}');
-//       return [];
-//     }
-//   } catch (e) {
-//     print('Exception: $e');
-//     return [];
-//   }
-// }

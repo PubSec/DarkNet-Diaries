@@ -127,6 +127,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(widget.episodeNumber),
+                      const Text("00:00"),
                       const Text("00:00")
                     ],
                   )

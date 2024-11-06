@@ -46,7 +46,6 @@ class _HomeViewState extends State<HomeView> {
         centerTitle: true,
       ),
       body: RefreshIndicator(
-        // #fe0002
         color: darknetRed,
         onRefresh: fetchEpisodeList,
         child: episodeList.isEmpty

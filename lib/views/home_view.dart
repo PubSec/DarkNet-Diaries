@@ -49,15 +49,12 @@ class _HomeViewState extends State<HomeView> {
         color: darknetRed,
         onRefresh: fetchEpisodeList,
         child: episodeList.isEmpty
-            ? RefreshIndicator(
-                onRefresh: fetchEpisodeList,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.sizeOf(context).width / 2),
-                  child: const Center(
-                    child: Text('Try refreshing the page'),
-                  ),
+            ? SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding:
+                    EdgeInsets.only(top: MediaQuery.sizeOf(context).width / 2),
+                child: const Center(
+                  child: Text('Try refreshing the page'),
                 ),
               )
             : ListView.builder(

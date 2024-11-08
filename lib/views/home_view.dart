@@ -61,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
                 itemCount: episodeList.length,
                 itemBuilder: (context, index) {
                   return PlayerWidget(
-                    episodeName: episodeList[index]
+                    episodeName: episodeList
                         .toString(), // Assuming the name is the first part
                     // Assuming the number is the second part
                   );

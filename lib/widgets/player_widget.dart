@@ -1,8 +1,10 @@
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:just_audio/just_audio.dart';
 
 // ignore: must_be_immutable
 class PlayerWidget extends StatefulWidget {
@@ -20,6 +22,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double sliderValue = 0.0; // Slider value
   int randomInt = Random().nextInt(185);
   dynamic episodeList = [];
+  final player = AudioPlayer();
 
   void _togglePlayerSize() {
     setState(() {
@@ -81,7 +84,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   IconButton(
                     padding: const EdgeInsets.only(top: 2),
                     iconSize: 45,
-                    onPressed: () {},
+                    onPressed: () {
+                      Duration? duration =
+                          AudioSource.uri(Uri.parse(widget.episodeName))
+                              .duration;
+                      print(duration);
+                    },
                     icon: const Icon(
                       Icons.play_arrow,
                     ),
@@ -124,21 +132,22 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                         overflow: TextOverflow.ellipsis,
                         widget.episodeName
                             .replaceRange(0, 52, "")
-                            .replaceAll("-", '  ')
+                            .replaceFirst("-", ' ')
                             .toUpperCase(),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
-                        maxLines: 1,
                       ),
                       Row(
                         children: [
+                          // Audio Start
                           const Text("00:00"),
                           SizedBox(
                             width: 30,
                             child: Icon(Icons.linear_scale_outlined),
                           ),
+                          // Audio Finish
                           const Text("00:00")
                         ],
                       )

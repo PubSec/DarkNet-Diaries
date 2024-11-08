@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
         });
         print("length = ${episodeList.length}");
       } else {
-        showAboutDialog(context: context);
+        print("Status code not 200");
       }
     } catch (e) {
       print('Exception: $e');
@@ -57,13 +57,18 @@ class _HomeViewState extends State<HomeView> {
                   child: Text('Try refreshing the page'),
                 ),
               )
-            : ListView.builder(
+            : ListView.separated(
                 itemCount: episodeList.length,
                 itemBuilder: (context, index) {
                   return PlayerWidget(
-                    episodeName: "Helo", // Assuming the name is the first part
-                    episodeNumber:
-                        '1', // Assuming the number is the second part
+                    episodeName: episodeList[index]
+                        .toString(), // Assuming the name is the first part
+                    // Assuming the number is the second part
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 10,
                   );
                 },
               ),

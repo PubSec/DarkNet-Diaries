@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,7 @@ import 'dart:math';
 // ignore: must_be_immutable
 class PlayerWidget extends StatefulWidget {
   String episodeName;
-  String episodeNumber;
-  PlayerWidget(
-      {super.key, required this.episodeName, required this.episodeNumber});
+  PlayerWidget({super.key, required this.episodeName});
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -44,7 +43,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               width: 400,
               height: bottomContainerHeight,
               decoration: BoxDecoration(
-                color: darknetRed,
+                color: darkDarknetRed,
                 borderRadius: BorderRadius.circular(20),
               ),
               duration: const Duration(milliseconds: 400),
@@ -122,13 +121,27 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.episodeName,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        widget.episodeName
+                            .replaceRange(0, 52, "")
+                            .replaceAll("-", '  ')
+                            .toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
                       ),
-                      Text(widget.episodeNumber),
-                      const Text("00:00"),
-                      const Text("00:00")
+                      Row(
+                        children: [
+                          const Text("00:00"),
+                          SizedBox(
+                            width: 30,
+                            child: Icon(Icons.linear_scale_outlined),
+                          ),
+                          const Text("00:00")
+                        ],
+                      )
                     ],
                   )
                 ],

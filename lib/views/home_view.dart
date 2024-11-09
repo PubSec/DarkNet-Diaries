@@ -11,7 +11,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  var episodeList = [];
+  List episodeList = [];
 
   Future<void> fetchEpisodeList() async {
     try {
@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
         setState(() {
           episodeList = (response.data as String).split("\n").toList();
         });
-        print("length = ${episodeList.length}");
+        print("length = ${episodeList[0]}");
       } else {
         print("Status code not 200");
       }
@@ -36,9 +36,10 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Darknet Diaries',
           style: TextStyle(
+            color: darknetWhite,
             letterSpacing: 4,
             leadingDistribution: TextLeadingDistribution.even,
           ),
@@ -51,20 +52,21 @@ class _HomeViewState extends State<HomeView> {
         child: episodeList.isEmpty
             ? SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding:
-                    EdgeInsets.only(top: MediaQuery.sizeOf(context).width / 2),
-                child: const Center(
-                  child: Text('Try refreshing the page'),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 350),
+                  child: Center(
+                    child: Text('Try refreshing the page'),
+                  ),
                 ),
               )
             : ListView.separated(
                 itemCount: episodeList.length,
                 itemBuilder: (context, index) {
                   return PlayerWidget(
-                    episodeName: episodeList
-                        .toString(), // Assuming the name is the first part
-                    // Assuming the number is the second part
-                  );
+                      episodeName:
+                          episodeList // Assuming the name is the first part
+                      // Assuming the number is the second part
+                      );
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(

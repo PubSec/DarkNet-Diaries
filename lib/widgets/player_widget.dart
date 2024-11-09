@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PositionData {
@@ -29,14 +28,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double iconTurns = 1;
   double parentContainerHeight = 80;
   double bottomContainerHeight = 50;
-  double sliderValue = 0.0; // Slider value
   int randomInt = Random().nextInt(185);
   late AudioPlayer _audioPlayer;
-  late final _playList = ConcatenatingAudioSource(children: [
-    AudioSource.uri(
-        Uri.parse(widget.episodeName.toString().split('/n') as String),
-        tag: MediaItem(id: '0', title: "title"))
-  ]);
+  late final _playList = ConcatenatingAudioSource(children: []);
 
   void _togglePlayerSize() {
     setState(() {
@@ -108,8 +102,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                               final positionData = snapshot.data;
                               return ProgressBar(
                                 progressBarColor: darknetRed,
-                                baseBarColor: darknetGrey,
-                                bufferedBarColor: Colors.amber,
+                                baseBarColor: darknetWhite,
+                                bufferedBarColor: darkDarkNetGrey,
                                 thumbColor: darknetRed,
                                 progress:
                                     positionData?.position ?? Duration.zero,
@@ -124,22 +118,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                       )
                     ],
                   ),
-                  // IconButton(
-                  //   padding: const EdgeInsets.only(left: 30),
-                  //   iconSize: 30,
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.arrow_back_ios,
-                  //   ),
-                  // ),
-                  Controls(audioPlayer: _audioPlayer),
-                  IconButton(
-                    padding: const EdgeInsets.only(right: 10),
-                    iconSize: 30,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_forward_ios,
-                    ),
+                  Controls(
+                    audioPlayer: _audioPlayer,
                   ),
                 ],
               ),
@@ -168,31 +148,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   overflow: TextOverflow.ellipsis,
-                      //   widget.episodeName
-                      //       .replaceRange(0, 52, "")
-                      //       .replaceFirst("-", ' ')
-                      //       .toUpperCase(),
-                      //   style: TextStyle(
-                      //     fontSize: 15,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      Row(
-                        children: [
-                          // Audio Start
-                          const Text("00:00"),
-                          SizedBox(
-                            width: 30,
-                            child: Icon(Icons.linear_scale_outlined),
-                          ),
-                          // Audio Finish
-                          const Text("00:00")
-                        ],
-                      )
-                    ],
+                    children: [Text(widget.episodeName[0])],
                   )
                 ],
               ),
@@ -264,14 +220,15 @@ class Controls extends StatelessWidget {
             }
             return Icon(
               Icons.play_arrow_rounded,
-              size: 1,
+              size: 30,
               color: darknetWhite,
             );
           },
         ),
         IconButton(
-            onPressed: audioPlayer.seekToNext,
-            icon: Icon(Icons.skip_next_rounded)),
+          onPressed: audioPlayer.seekToNext,
+          icon: Icon(Icons.skip_next_rounded),
+        ),
       ],
     );
   }

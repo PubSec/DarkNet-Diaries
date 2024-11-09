@@ -19,9 +19,9 @@ class _HomeViewState extends State<HomeView> {
           'https://darknetdiaries.com/darknet-diaries-all-episode-links.txt');
       if (response.statusCode == 200) {
         setState(() {
-          episodeList = (response.data as String).split("\n").toList();
+          episodeList = (response.data as String).split('\n').toList();
         });
-        print("length = ${episodeList[0]}");
+        print("length = ${episodeList.length}");
       } else {
         print("Status code not 200");
       }
@@ -62,11 +62,7 @@ class _HomeViewState extends State<HomeView> {
             : ListView.separated(
                 itemCount: episodeList.length,
                 itemBuilder: (context, index) {
-                  return PlayerWidget(
-                      episodeName:
-                          episodeList // Assuming the name is the first part
-                      // Assuming the number is the second part
-                      );
+                  return PlayerWidget(episodeName: episodeList);
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(

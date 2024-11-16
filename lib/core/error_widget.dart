@@ -1,6 +1,5 @@
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class ErrorWidget extends StatelessWidget {
   String errorMessage;
@@ -8,24 +7,21 @@ class ErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 100,
-        width: 100,
-        child: AlertDialog(
-          icon: Icon(
-            CupertinoIcons.exclamationmark_octagon,
-            color: darknetRed,
+    return Container(
+      color: darknetBlack,
+      height: 100,
+      width: 100,
+      child: Column(
+        children: [
+          Center(
+            child: Icon(
+              CupertinoIcons.exclamationmark_triangle,
+              size: 30,
+              color: darknetRed,
+            ),
           ),
-          title: Text(
-            "Error",
-            style: TextStyle(color: darknetWhite),
-          ),
-          content: Text(
-            errorMessage,
-            style: TextStyle(color: darknetWhite),
-          ),
-        ),
+          Text(errorMessage)
+        ],
       ),
     );
   }

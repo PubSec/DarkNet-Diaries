@@ -1,5 +1,6 @@
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ErrorWidget extends StatelessWidget {
   String errorMessage;
@@ -16,11 +17,18 @@ class ErrorWidget extends StatelessWidget {
           Center(
             child: Icon(
               CupertinoIcons.exclamationmark_triangle,
-              size: 30,
+              size: 50,
               color: darknetRed,
             ),
           ),
-          Text(errorMessage)
+          SizedBox(height: 50),
+          Text(errorMessage),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("OK"),
+          )
         ],
       ),
     );

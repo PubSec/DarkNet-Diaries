@@ -2,34 +2,56 @@ import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ErrorWidget extends StatelessWidget {
-  String errorMessage;
-  ErrorWidget({super.key, required this.errorMessage});
-
+class CustomErrorWidget extends StatelessWidget {
+  const CustomErrorWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: darknetBlack,
-      height: 100,
-      width: 100,
-      child: Column(
-        children: [
-          Center(
-            child: Icon(
-              CupertinoIcons.exclamationmark_triangle,
-              size: 50,
-              color: darknetRed,
-            ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Dialog(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: darkDarkNetGrey,
           ),
-          SizedBox(height: 50),
-          Text(errorMessage),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("OK"),
-          )
-        ],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                CupertinoIcons.exclamationmark_octagon,
+                size: 100,
+                color: darknetRed,
+              ),
+              Padding(
+                padding: EdgeInsets.all(40),
+                child: Text(
+                  "An error occured. Try again.",
+                  style: TextStyle(
+                    fontSize: 19.5,
+                    fontWeight: FontWeight.bold,
+                    color: darknetWhite,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Ok",
+                      style: TextStyle(
+                        color: darknetWhite,
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

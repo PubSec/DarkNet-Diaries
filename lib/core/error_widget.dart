@@ -36,12 +36,12 @@ class CustomErrorWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      "Ok",
+                      "OK",
                       style: TextStyle(
                         color: darknetWhite,
                       ),

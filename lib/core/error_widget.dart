@@ -37,6 +37,7 @@ class CustomErrorWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
+                    
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

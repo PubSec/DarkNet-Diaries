@@ -1,4 +1,5 @@
 import 'package:darknet_diaries/core/constant.dart';
+import 'package:darknet_diaries/model/model.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,13 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                CallApi().getData("http://127.0.0.1:5000");
+              },
+              icon: Icon(Icons.abc))
+        ],
         title: Text(
           'Darknet Diaries',
           style: TextStyle(

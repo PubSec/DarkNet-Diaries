@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
               onPressed: () {
-                CallApi().getData("http://127.0.0.1:5000");
+                CallApi().getData();
               },
               icon: Icon(Icons.abc))
         ],

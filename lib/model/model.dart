@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class CallApi {
-  final String _url = 'http://127.0.0.1:5000';
+  final String apiUrl = 'http://127.0.0.1:5000';
 
   getData(apiUrl) async {
     try {

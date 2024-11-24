@@ -48,7 +48,8 @@ class _HomeViewState extends State<HomeView> {
           'Darknet Diaries',
           style: TextStyle(
             color: darknetWhite,
-            letterSpacing: 4,
+            letterSpacing: 6,
+            fontWeight: FontWeight.bold,
             leadingDistribution: TextLeadingDistribution.even,
           ),
         ),

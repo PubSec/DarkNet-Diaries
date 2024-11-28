@@ -91,7 +91,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 250,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 10),

@@ -1,4 +1,7 @@
 import 'package:darknet_diaries/core/constant.dart';
+import 'package:darknet_diaries/core/functions.dart';
+import 'package:darknet_diaries/widgets/player_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -9,6 +12,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  List<String> episodeList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,18 +29,28 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              var list = await downloadEpisodeFile();
+              setState(() {
+                episodeList = list;
+              });
+            },
+            icon: Icon(CupertinoIcons.arrow_uturn_down),
+          )
+        ],
       ),
-      // body: ListView.separated(
-      //   itemCount:
-      //   itemBuilder: (context, index) {
-      //     return PlayerWidget(episodeName: episodeList);
-      //   },
-      //   separatorBuilder: (BuildContext context, int index) {
-      //     return SizedBox(
-      //       height: 10,
-      //     );
-      //   },
-      // ),
+      body: episodeList.isEmpty
+          ? Center(
+              child: Text("Press the button above"),
+            )
+          : ListView.builder(
+              itemCount: episodeList.length,
+              itemBuilder: (context, index) {
+                return PlayerWidget();
+              },
+            ),
     );
   }
 }

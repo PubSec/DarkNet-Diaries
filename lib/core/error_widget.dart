@@ -22,8 +22,7 @@ class CustomErrorWidget extends StatelessWidget {
                 size: 100,
                 color: darknetRed,
               ),
-              Padding(
-                padding: EdgeInsets.all(40),
+              Center(
                 child: Text(
                   "An error occured. Try again.",
                   style: TextStyle(
@@ -33,22 +32,19 @@ class CustomErrorWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "OK",
-                      style: TextStyle(
-                        color: darknetWhite,
-                      ),
+              Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                      color: darknetWhite,
                     ),
-                  )
-                ],
+                  ),
+                ),
               )
             ],
           ),

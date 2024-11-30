@@ -16,17 +16,17 @@ class PositionData {
 
 // ignore: must_be_immutable
 class PlayerWidget extends StatefulWidget {
-  List episodeName;
-  PlayerWidget({super.key, required this.episodeName});
-
+  // List episodeName;
+  PlayerWidget({super.key});
+// required this.episodeName
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
 }
 
 class _PlayerWidgetState extends State<PlayerWidget> {
   double iconTurns = 1;
-  double parentContainerHeight = 80;
-  double bottomContainerHeight = 50;
+  double parentContainerHeight = 100;
+  double bottomContainerHeight = 80;
   int randomInt = Random().nextInt(185);
   late AudioPlayer _audioPlayer;
   late final _playList = ConcatenatingAudioSource(children: []);
@@ -76,8 +76,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
         duration: const Duration(milliseconds: 200),
         child: Stack(
           children: [
+            // The back side of the container
             AnimatedContainer(
-              width: 400,
+              width: 10000,
               height: bottomContainerHeight,
               decoration: BoxDecoration(
                 color: darkDarknetRed,
@@ -94,7 +95,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                       SizedBox(
                         width: 250,
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 10),
+                          padding: const EdgeInsets.only(left: 10),
                           child: StreamBuilder(
                             stream: _positionDataStream,
                             builder: (context, snapshot) {
@@ -123,7 +124,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 ],
               ),
             ),
-            // This is the upper container
+            // This is the upper container in the stack layer
             AnimatedContainer(
               width: 850,
               height: 80,
@@ -147,7 +148,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(widget.episodeName[0])],
+                    // children: [Text(widget.episodeName[0])],
                   )
                 ],
               ),

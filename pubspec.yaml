@@ -40,7 +40,6 @@ dependencies:
   audio_video_progress_bar: ^2.0.3
   just_audio_background: ^0.0.1-beta.13
   rxdart: ^0.28.0
-  http: ^1.2.2
   
 
 dev_dependencies:

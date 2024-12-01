@@ -33,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
           IconButton(
             onPressed: () async {
               var list = await downloadEpisodeFile();
+              print(await episodeList.length);
               setState(() {
                 episodeList = list;
               });
@@ -43,12 +44,18 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: episodeList.isEmpty
           ? Center(
-              child: Text("Press the button above"),
+              child: Text(
+                "Press the button above",
+                style: TextStyle(color: darknetWhite),
+              ),
             )
           : ListView.builder(
               itemCount: episodeList.length,
               itemBuilder: (context, index) {
-                return PlayerWidget();
+                return PlayerWidget(
+                  episodeLink: episodeList[index],
+                  episodeList: episodeList,
+                );
               },
             ),
     );

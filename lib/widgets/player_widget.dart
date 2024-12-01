@@ -16,9 +16,11 @@ class PositionData {
 
 // ignore: must_be_immutable
 class PlayerWidget extends StatefulWidget {
-  // List episodeName;
-  PlayerWidget({super.key});
-// required this.episodeName
+  String episodeLink;
+  List<String> episodeList;
+  PlayerWidget(
+      {super.key, required this.episodeLink, required this.episodeList});
+
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
 }
@@ -27,10 +29,21 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   double iconTurns = 1;
   double parentContainerHeight = 100;
   double bottomContainerHeight = 80;
-  int randomInt = Random().nextInt(185);
+  int randomInt = Random().nextInt(31);
   late AudioPlayer _audioPlayer;
-  late final _playList = ConcatenatingAudioSource(children: []);
+  late final _playList = ConcatenatingAudioSource(
+      children: widget.episodeList
+          .map((url) => AudioSource.uri(
+              Uri.parse(url))) // Convert each URL string to an AudioSource
+          .toList());
 
+  // Extracts the name of the episode
+  String extractEpisodeNames(String episodeName) {
+    String name = episodeName.substring(52).toUpperCase();
+    return name;
+  }
+
+  // Triggers the animation to show the play button
   void _togglePlayerSize() {
     setState(() {
       iconTurns = iconTurns == 0.5 ? 1 : 0.5;
@@ -87,7 +100,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               duration: const Duration(milliseconds: 400),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -129,7 +142,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               width: 850,
               height: 80,
               decoration: BoxDecoration(
-                // TODO: FIx this
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -148,11 +160,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    // children: [Text(widget.episodeName[0])],
+                    children: [Text(extractEpisodeNames(widget.episodeLink))],
                   )
                 ],
               ),
             ),
+            // This is for the little arrow on side of the widgets
             Align(
               alignment: Alignment.topRight,
               child: InkWell(

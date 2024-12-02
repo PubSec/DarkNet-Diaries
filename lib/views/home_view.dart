@@ -13,6 +13,20 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<String> episodeList = [];
+
+  Future<void> _loadEpisodeData() async {
+    List<String> episodeLinks = await downloadEpisodeFile();
+    if (episodeLinks.isEmpty) {
+      print("No episodes found or download failed.");
+    } else {
+      print("Downloaded episode links: ${episodeLinks.length}");
+      // Process the episode links (e.g., populate the UI)
+      setState(() {
+        episodeList = episodeLinks;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +45,8 @@ class _HomeViewState extends State<HomeView> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () async {
-              var list = await downloadEpisodeFile();
-              print(await episodeList.length);
-              setState(() {
-                episodeList = list;
-              });
+            onPressed: () {
+              _loadEpisodeData();
             },
             icon: Icon(CupertinoIcons.arrow_uturn_down),
           )
@@ -49,12 +59,18 @@ class _HomeViewState extends State<HomeView> {
                 style: TextStyle(color: darknetWhite),
               ),
             )
-          : ListView.builder(
+          : ListView.separated(
+              cacheExtent: episodeList.length / 2,
               itemCount: episodeList.length,
               itemBuilder: (context, index) {
                 return PlayerWidget(
+                  key: ValueKey(episodeList[index]),
                   episodeLink: episodeList[index],
-                  episodeList: episodeList,
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 10,
                 );
               },
             ),

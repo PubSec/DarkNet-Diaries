@@ -1,4 +1,5 @@
 import 'package:darknet_diaries/core/constant.dart';
+import 'package:darknet_diaries/core/error_widget.dart';
 import 'package:darknet_diaries/core/functions.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,11 @@ class _HomeViewState extends State<HomeView> {
   Future<void> _loadEpisodeData() async {
     List<String> episodeLinks = await downloadEpisodeFile();
     if (episodeLinks.isEmpty) {
-      print("No episodes found or download failed.");
+      showDialog(
+          context: context,
+          builder: (context) {
+            return CustomErrorWidget();
+          });
     } else {
       print("Downloaded episode links: ${episodeLinks.length}");
       // Process the episode links (e.g., populate the UI)

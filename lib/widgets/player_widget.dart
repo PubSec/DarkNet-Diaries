@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class PlayerWidget extends StatefulWidget {
   final String episodeLink;
-  PlayerWidget({super.key, required this.episodeLink});
+  const PlayerWidget({super.key, required this.episodeLink});
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();

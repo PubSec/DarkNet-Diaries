@@ -18,6 +18,7 @@ class _HomeViewState extends State<HomeView> {
   Future<void> _loadEpisodeData() async {
     List<String> episodeLinks = await downloadEpisodeFile();
     if (episodeLinks.isEmpty) {
+      print("No episodes found or download failed.");
       showDialog(
           context: context,
           builder: (context) {
@@ -64,18 +65,13 @@ class _HomeViewState extends State<HomeView> {
                 style: TextStyle(color: darknetWhite),
               ),
             )
-          : ListView.separated(
+          : ListView.builder(
               cacheExtent: episodeList.length / 2,
               itemCount: episodeList.length,
               itemBuilder: (context, index) {
                 return PlayerWidget(
                   key: ValueKey(episodeList[index]),
                   episodeLink: episodeList[index],
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 10,
                 );
               },
             ),

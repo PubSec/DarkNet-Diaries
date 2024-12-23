@@ -1,38 +1,20 @@
 import 'package:darknet_diaries/core/constant.dart';
-import 'package:darknet_diaries/core/error_widget.dart';
-import 'package:darknet_diaries/core/functions.dart';
+import 'package:darknet_diaries/model/episode_model.dart';
+import 'package:darknet_diaries/providers/link_provider.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeView extends StatefulWidget {
+enum ConnectionPath { dsadas, dasdsa }
+
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  List<String> episodeList = [];
-
-  Future<void> _loadEpisodeData() async {
-    List<String> episodeLinks = await downloadEpisodeFile();
-    if (episodeLinks.isEmpty) {
-      print("No episodes found or download failed.");
-      showDialog(
-          context: context,
-          builder: (context) {
-            return CustomErrorWidget();
-          });
-    } else {
-      print("Downloaded episode links: ${episodeLinks.length}");
-      // Process the episode links (e.g., populate the UI)
-      setState(() {
-        episodeList = episodeLinks;
-      });
-    }
-  }
-
+class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,32 +31,36 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _loadEpisodeData();
-            },
-            icon: Icon(CupertinoIcons.arrow_uturn_down),
-          )
-        ],
       ),
-      body: episodeList.isEmpty
-          ? Center(
-              child: Text(
-                "Press the button above",
-                style: TextStyle(color: darknetWhite),
-              ),
-            )
-          : ListView.builder(
-              cacheExtent: episodeList.length / 2,
-              itemCount: episodeList.length,
+      body: FutureBuilder(
+        future: ref.watch(episodeNotifierProvider.notifier).getEpisodes(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // While the future is loading
+
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // If there was an error
+
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // If the data is empty
+
+            return Center(child: Text('No episodes found.'));
+          } else {
+            // If the data is available
+
+            List<EpisodeModel> episodes = snapshot.data!;
+
+            return ListView.builder(
+              itemCount: episodes.length,
               itemBuilder: (context, index) {
-                return PlayerWidget(
-                  key: ValueKey(episodeList[index]),
-                  episodeLink: episodeList[index],
-                );
+                return PlayerWidget(episodeLink: episodes[index].episodeLink);
               },
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

@@ -3,11 +3,11 @@ class EpisodeModel {
   String episodeLink;
   EpisodeModel({required this.episodeLink});
 
-  // String extractEpisodeNames() {
-  //   if (episodeName.length > 52) {
-  //     return episodeName.substring(52).toUpperCase();
-  //   } else {
-  //     return episodeName.toUpperCase();
-  //   }
-  // }
+  String extractEpisodeNames(episodeName) {
+    if (episodeName.length > 52) {
+      return episodeName.substring(52).toUpperCase();
+    } else {
+      return episodeName.toUpperCase();
+    }
+  }
 }

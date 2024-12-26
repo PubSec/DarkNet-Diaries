@@ -51,25 +51,25 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
     }
   }
 
-  Future<void> togglePlayPause() async {
-    if (isPlaying) {
-      // Pause the audio
-      await _audioPlayer.pause();
-      setState(() {
-        isPlaying = false;
-      });
-    } else {
-      try {
-        // Play the audio from network URL
-        await _audioPlayer.play(UrlSource(widget.episodeLink));
-        setState(() {
-          isPlaying = true;
-        });
-      } catch (e) {
-        print("Error playing episode: $e");
-      }
-    }
-  }
+  // Future<void> togglePlayPause() async {
+  //   if (isPlaying) {
+  //     // Pause the audio
+  //     await _audioPlayer.pause();
+  //     setState(() {
+  //       isPlaying = false;
+  //     });
+  //   } else {
+  //     try {
+  //       // Play the audio from network URL
+  //       await _audioPlayer.play(UrlSource(widget.episodeLink));
+  //       setState(() {
+  //         isPlaying = true;
+  //       });
+  //     } catch (e) {
+  //       print("Error playing episode: $e");
+  //     }
+  //   }
+  // }
 }
 
 final episodeNotifierProvider =

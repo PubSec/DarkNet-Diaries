@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:darknet_diaries/core/constant.dart';
 import 'package:flutter/material.dart';
 
 class PlayerWidget extends StatefulWidget {
@@ -66,7 +67,10 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           ),
           child: Column(
             children: [
-              Text(extractEpisodeNames(widget.episodeLink)),
+              Text(
+                extractEpisodeNames(widget.episodeLink),
+                style: TextStyle(color: darknetWhite),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -1,11 +1,9 @@
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/model/episode_model.dart';
-import 'package:darknet_diaries/providers/episode_notifier.dart';
+import 'package:darknet_diaries/providers/episode_provider.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-enum ConnectionPath { dsadas, dasdsa }
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -17,9 +15,10 @@ class HomeView extends ConsumerStatefulWidget {
 class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
+    Future allEpisodes =
+        ref.watch(episodeNotifierProvider.notifier).getEpisodes();
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.abc))],
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
@@ -34,12 +33,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: ref.watch(episodeNotifierProvider.notifier).getEpisodes(),
+        future: allEpisodes,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // While the future is loading
 
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator(color: darknetRed));
           } else if (snapshot.hasError) {
             // If there was an error
 

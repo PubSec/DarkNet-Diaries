@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/providers/player_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,47 +12,12 @@ class PlayerWidget extends ConsumerStatefulWidget {
 }
 
 class _PlayerWidgetState extends ConsumerState<PlayerWidget> {
-  bool isPlaying = false;
-  bool isCollapsed = true;
-  double iconTurns = 1;
-  double parentContainerHeight = 100;
-  double bottomContainerHeight = 80;
-
-  // Initialize AssetsAudioPlayer
-  final AudioPlayer _audioPlayer = AudioPlayer();
-
   String extractEpisodeNames(String episodeName) {
     if (episodeName.length > 52) {
       return episodeName.substring(52).toUpperCase();
     } else {
       return episodeName.toUpperCase();
     }
-  }
-
-  // Future<void> _togglePlayPause() async {
-  //   if (isPlaying) {
-  //     // Pause the audio
-  //     await _audioPlayer.pause();
-  //     setState(() {
-  //       isPlaying = false;
-  //     });
-  //   } else {
-  //     try {
-  //       // Play the audio from network URL
-  //       await _audioPlayer.play(UrlSource(widget.episodeLink));
-  //       setState(() {
-  //         isPlaying = true;
-  //       });
-  //     } catch (e) {
-  //       print("Error playing episode: $e");
-  //     }
-  //   }
-  // }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose(); // Dispose the player when the widget is removed
-    super.dispose();
   }
 
   @override

@@ -1,16 +1,18 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:darknet_diaries/core/constant.dart';
+import 'package:darknet_diaries/providers/player_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PlayerWidget extends StatefulWidget {
+class PlayerWidget extends ConsumerStatefulWidget {
   final String episodeLink;
   const PlayerWidget({super.key, required this.episodeLink});
 
   @override
-  State<PlayerWidget> createState() => _PlayerWidgetState();
+  ConsumerState<PlayerWidget> createState() => _PlayerWidgetState();
 }
 
-class _PlayerWidgetState extends State<PlayerWidget> {
+class _PlayerWidgetState extends ConsumerState<PlayerWidget> {
   bool isPlaying = false;
   bool isCollapsed = true;
   double iconTurns = 1;
@@ -28,25 +30,25 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     }
   }
 
-  Future<void> _togglePlayPause() async {
-    if (isPlaying) {
-      // Pause the audio
-      await _audioPlayer.pause();
-      setState(() {
-        isPlaying = false;
-      });
-    } else {
-      try {
-        // Play the audio from network URL
-        await _audioPlayer.play(UrlSource(widget.episodeLink));
-        setState(() {
-          isPlaying = true;
-        });
-      } catch (e) {
-        print("Error playing episode: $e");
-      }
-    }
-  }
+  // Future<void> _togglePlayPause() async {
+  //   if (isPlaying) {
+  //     // Pause the audio
+  //     await _audioPlayer.pause();
+  //     setState(() {
+  //       isPlaying = false;
+  //     });
+  //   } else {
+  //     try {
+  //       // Play the audio from network URL
+  //       await _audioPlayer.play(UrlSource(widget.episodeLink));
+  //       setState(() {
+  //         isPlaying = true;
+  //       });
+  //     } catch (e) {
+  //       print("Error playing episode: $e");
+  //     }
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -75,9 +77,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: _togglePlayPause,
-                    icon:
-                        isPlaying ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+                    onPressed: () {
+                      ref
+                          .watch(playerNotifierProvider.notifier)
+                          .getPlayingEpisodes(widget.episodeLink);
+                    },
+                    icon: ref.watch(playerNotifierProvider),
                   ),
                 ],
               )

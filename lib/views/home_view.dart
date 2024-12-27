@@ -1,6 +1,6 @@
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/model/episode_model.dart';
-import 'package:darknet_diaries/providers/link_provider.dart';
+import 'package:darknet_diaries/providers/episode_notifier.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +19,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.abc))],
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(

@@ -13,7 +13,7 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
   }
 
   Future<List<EpisodeModel>> getEpisodes() async {
-    String extractEpisodeNames(String episodeName) {
+    String extractEpisodeName(String episodeName) {
       if (episodeName.length > 52) {
         return episodeName.substring(56).toUpperCase();
       } else {
@@ -52,7 +52,8 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
           List<EpisodeModel> episodes = fileContents
               .map(
                 (episodeLink) => EpisodeModel(
-                    episodeLink: extractEpisodeNames(episodeLink),
+                    episodeLink: episodeLink,
+                    episodeName: extractEpisodeName(episodeLink),
                     episodeId: extractEpisodeNumber(episodeLink)),
               )
               .toList();

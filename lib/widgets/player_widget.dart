@@ -27,7 +27,7 @@ class PlayerWidget extends ConsumerWidget {
               children: [
                 Text('${episode.episodeId} '),
                 Text(
-                  episode.episodeLink,
+                  episode.episodeName,
                   style: TextStyle(color: darknetWhite),
                 ),
               ],

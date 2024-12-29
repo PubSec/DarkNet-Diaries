@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class PlayerNotifier extends Notifier<Icon> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
-  String currentlyPlaying = '';
 
   @override
   Icon build() {
@@ -14,17 +13,14 @@ class PlayerNotifier extends Notifier<Icon> {
 
   Future<void> getPlayingEpisodes(String episodeLink) async {
     try {
-      if (!isPlaying && episodeLink != currentlyPlaying) {
+      if (!isPlaying) {
         // Play the audio from network URL
         await _audioPlayer.play(UrlSource(episodeLink));
-        currentlyPlaying = episodeLink;
         isPlaying = true; // Update the state
-        print(currentlyPlaying);
-      } else if (isPlaying && episodeLink == currentlyPlaying) {
+      } else if (isPlaying) {
         // Pause the audio
         await _audioPlayer.pause();
         isPlaying = false; // Update the state
-        currentlyPlaying = '';
       }
 
       // Update the icon state

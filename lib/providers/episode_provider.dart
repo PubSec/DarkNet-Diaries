@@ -13,6 +13,23 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
   }
 
   Future<List<EpisodeModel>> getEpisodes() async {
+    String extractEpisodeNames(String episodeName) {
+      if (episodeName.length > 52) {
+        return episodeName.substring(56).toUpperCase();
+      } else {
+        return episodeName.toUpperCase();
+      }
+    }
+
+    String extractEpisodeNumber(String episodeName) {
+      if (episodeName.length > 52) {
+        var episodeNumber = episodeName.substring(54).split('-')[0];
+        return episodeNumber;
+      } else {
+        return episodeName.toUpperCase();
+      }
+    }
+
     try {
       // Get the application documents directory
       var appDir = await getTemporaryDirectory();
@@ -31,8 +48,13 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
         if (await file.exists()) {
           final fileContents = await file.readAsLines();
           print("File content downloaded and read successfully.");
+
           List<EpisodeModel> episodes = fileContents
-              .map((episodeLink) => EpisodeModel(episodeLink: episodeLink))
+              .map(
+                (episodeLink) => EpisodeModel(
+                    episodeLink: extractEpisodeNames(episodeLink),
+                    episodeId: extractEpisodeNumber(episodeLink)),
+              )
               .toList();
           return Future.value(episodes);
         } else {

@@ -1,5 +1,5 @@
 class EpisodeModel {
   final String episodeLink;
-  bool isPlaying;
-  EpisodeModel({required this.episodeLink, this.isPlaying = false});
+  final String episodeId;
+  EpisodeModel({required this.episodeLink, required this.episodeId});
 }

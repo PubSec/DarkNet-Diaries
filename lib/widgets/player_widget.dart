@@ -25,7 +25,10 @@ class PlayerWidget extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Text('${episode.episodeId} '),
+                Text(
+                  episode.episodeId,
+                  style: TextStyle(color: darknetWhite),
+                ),
                 Text(
                   episode.episodeName,
                   style: TextStyle(color: darknetWhite),

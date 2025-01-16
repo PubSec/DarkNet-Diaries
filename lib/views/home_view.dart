@@ -52,13 +52,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
             List<EpisodeModel> episodes = snapshot.data!;
 
-            return ListView.builder(
+            return ListView.separated(
+              cacheExtent: 5,
               itemCount: episodes.length,
               itemBuilder: (context, index) {
                 return PlayerWidget(
                   episode: episodes[index],
                 );
               },
+              separatorBuilder: (BuildContext context, int index) => SizedBox(
+                height: 20,
+              ),
             );
           }
         },

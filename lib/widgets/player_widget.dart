@@ -12,8 +12,6 @@ class PlayerWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Container(
-        // padding: EdgeInsets.all(8),
-        // margin: EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
         height: 80,
         decoration: BoxDecoration(
@@ -26,7 +24,7 @@ class PlayerWidget extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  episode.episodeId,
+                  episode.episodeId.toString(),
                   style: TextStyle(color: darknetWhite),
                 ),
                 Text(
@@ -42,9 +40,11 @@ class PlayerWidget extends ConsumerWidget {
                   onPressed: () {
                     ref
                         .watch(playerNotifierProvider.notifier)
-                        .getPlayingEpisodes(episode.episodeLink);
+                        .getPlayingEpisodes(episode);
                   },
-                  icon: ref.watch(playerNotifierProvider),
+                  icon: episode.isPlaying
+                      ? Icon(Icons.pause, color: darknetWhite)
+                      : Icon(Icons.play_arrow, color: darknetWhite),
                 ),
               ],
             )

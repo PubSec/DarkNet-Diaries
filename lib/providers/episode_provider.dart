@@ -21,13 +21,12 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
       }
     }
 
-    String extractEpisodeNumber(String episodeName) {
+    int extractEpisodeNumber(String episodeName) {
       if (episodeName.length > 52) {
         var episodeNumber = episodeName.substring(54).split('-')[0];
-        return episodeNumber;
-      } else {
-        return episodeName.toUpperCase();
+        return episodeNumber as int;
       }
+      return -1;
     }
 
     try {
@@ -54,7 +53,8 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
                 (episodeLink) => EpisodeModel(
                     episodeLink: episodeLink,
                     episodeName: extractEpisodeName(episodeLink),
-                    episodeId: extractEpisodeNumber(episodeLink)),
+                    episodeId: extractEpisodeNumber(episodeLink),
+                    isPlaying: false),
               )
               .toList();
           return Future.value(episodes);

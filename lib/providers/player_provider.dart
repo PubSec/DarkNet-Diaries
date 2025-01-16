@@ -1,26 +1,27 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:darknet_diaries/model/episode_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlayerNotifier extends Notifier<Icon> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  bool isPlaying = false;
+  // bool isPlaying = false;
 
   @override
   Icon build() {
-    return isPlaying ? Icon(Icons.pause) : Icon(Icons.play_arrow);
+    return Icon(Icons.play_arrow);
   }
 
-  Future<void> getPlayingEpisodes(String episodeLink) async {
+  Future<void> getPlayingEpisodes(EpisodeModel episodeModel) async {
     try {
-      if (!isPlaying) {
+      if (episodeModel.isPlaying == false) {
         // Play the audio from network URL
-        await _audioPlayer.play(UrlSource(episodeLink));
-        isPlaying = true; // Update the state
-      } else if (isPlaying) {
+        await _audioPlayer.play(UrlSource(episodeModel.episodeLink));
+        episodeModel.isPlaying = true; // Update the state
+      } else if (episodeModel.isPlaying == true) {
         // Pause the audio
         await _audioPlayer.pause();
-        isPlaying = false; // Update the state
+        episodeModel.isPlaying = false; // Update the state
       }
 
       // Update the icon state

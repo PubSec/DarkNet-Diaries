@@ -1,7 +1,7 @@
 class EpisodeModel {
   final String episodeLink;
   final String episodeName;
-  final int episodeId;
+  final String episodeId;
   bool isPlaying = false;
   EpisodeModel({
     required this.episodeName,

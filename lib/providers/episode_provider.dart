@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/model/episode_model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,23 +22,23 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
       }
     }
 
-    int extractEpisodeNumber(String episodeName) {
+    String extractEpisodeNumber(String episodeName) {
       if (episodeName.length > 52) {
         var episodeNumber = episodeName.substring(54).split('-')[0];
-        return episodeNumber as int;
+        return episodeNumber;
       }
-      return -1;
+      return '';
     }
 
     try {
       // Get the application documents directory
       var appDir = await getTemporaryDirectory();
       String fullPath = "${appDir.path}/darknetdiaries.txt";
-      print("Download will save to: $fullPath");
+      debugPrint("Download will save to: $fullPath");
 
       // Start downloading the file from the specified URL
       Response downloadStatus = await Dio().download(darknetUrl, fullPath);
-      print("Download Status: ${downloadStatus.statusCode}");
+      debugPrint("Download Status: ${downloadStatus.statusCode}");
 
       // If download is successful (HTTP status code 200)
       if (downloadStatus.statusCode == 200) {
@@ -46,7 +47,9 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
         // Check if the file exists and read its content
         if (await file.exists()) {
           final fileContents = await file.readAsLines();
-          print("File content downloaded and read successfully.");
+          if (kDebugMode) {
+            debugPrint("File content downloaded and read successfully.");
+          }
 
           List<EpisodeModel> episodes = fileContents
               .map(
@@ -59,17 +62,17 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
               .toList();
           return Future.value(episodes);
         } else {
-          print("File does not exist after download.");
+          debugPrint("File does not exist after download.");
           return [];
         }
       } else {
-        print(
+        debugPrint(
             "Failed to download file. Status code: ${downloadStatus.statusCode}");
         return [];
       }
     } catch (e) {
       // Handle potential errors during download or file I/O
-      print("Error during file download: $e");
+      debugPrint("Error during file download: $e");
       return [];
     }
   }

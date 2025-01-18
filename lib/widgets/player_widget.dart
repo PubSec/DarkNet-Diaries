@@ -19,16 +19,12 @@ class PlayerWidget extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  episode.episodeId.toString(),
-                  style: TextStyle(color: darknetWhite),
-                ),
-                Text(
-                  episode.episodeName,
+                  "${episode.episodeId}-${episode.episodeName}",
                   style: TextStyle(color: darknetWhite),
                 ),
               ],
@@ -42,7 +38,7 @@ class PlayerWidget extends ConsumerWidget {
                         .watch(playerNotifierProvider.notifier)
                         .getPlayingEpisodes(episode);
                   },
-                  icon: episode.isPlaying
+                  icon: ref.watch(playerNotifierProvider.notifier).build()
                       ? Icon(Icons.pause, color: darknetWhite)
                       : Icon(Icons.play_arrow, color: darknetWhite),
                 ),

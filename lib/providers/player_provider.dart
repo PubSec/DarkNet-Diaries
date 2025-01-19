@@ -3,41 +3,37 @@ import 'package:darknet_diaries/model/episode_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PlayerNotifier extends Notifier<bool> {
+class PlayerNotifier extends Notifier<Map<String, bool>> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  // bool isPlaying = false;
 
   @override
-  bool build() {
-    return false;
+  Map<String, bool> build() {
+    return {}; // Initial state: empty map
   }
 
-  Future<bool> getPlayingEpisodes(EpisodeModel episodeModel) async {
+  Future<void> togglePlayback(EpisodeModel episodeModel) async {
     try {
-      if (episodeModel.isPlaying == false) {
+      final episodeId =
+          episodeModel.episodeId; // Assuming each episode has a unique ID
+      final isPlaying = state[episodeId] ?? false;
+
+      if (!isPlaying) {
         // Play the audio from network URL
         await _audioPlayer.play(UrlSource(episodeModel.episodeLink));
-        episodeModel.isPlaying = true;
-        state = true;
-        state = build();
-        return state; // Update the state
-      } else if (episodeModel.isPlaying == true) {
+        state = {...state, episodeId: true}; // Update the state to playing
+      } else {
         // Pause the audio
         await _audioPlayer.pause();
-        episodeModel.isPlaying = false; // Update the state
-        state = false;
-        state = build();
-        return state;
+        state = {...state, episodeId: false}; // Update the state to not playing
       }
-      // Update the icon state
-      // Rebuild the icon based on the new state
     } catch (e) {
       debugPrint("Error playing episode: $e");
+      // Handle error appropriately
     }
-    throw '';
   }
 }
 
-final playerNotifierProvider = NotifierProvider<PlayerNotifier, bool>(() {
+final playerNotifierProvider =
+    NotifierProvider<PlayerNotifier, Map<String, bool>>(() {
   return PlayerNotifier();
 });

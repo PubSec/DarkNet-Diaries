@@ -16,15 +16,16 @@ class EpisodeNotifier extends Notifier<Future<List<EpisodeModel>>> {
   Future<List<EpisodeModel>> getEpisodes() async {
     String extractEpisodeName(String episodeName) {
       if (episodeName.length > 52) {
-        return episodeName.substring(56).toUpperCase();
-      } else {
-        return episodeName.toUpperCase();
+        String name = episodeName.split('ep')[1];
+        return name.toUpperCase();
       }
+      return '';
     }
 
     String extractEpisodeNumber(String episodeName) {
       if (episodeName.length > 52) {
-        var episodeNumber = episodeName.substring(54).split('-')[0];
+        String nameWithNumber = extractEpisodeName(episodeName);
+        String episodeNumber = nameWithNumber.split('-')[0];
         return episodeNumber;
       }
       return '';

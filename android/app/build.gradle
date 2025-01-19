@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.pubsec.darknet_diaries"
+    namespace = "io.github.pubsec.darknet_diaries"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

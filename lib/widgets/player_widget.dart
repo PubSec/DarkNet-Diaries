@@ -10,6 +10,10 @@ class PlayerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playbackStates = ref.watch(playerNotifierProvider);
+    final isPlaying = playbackStates[episode.episodeId] ??
+        false; // Check the state for this episode
+
     return SafeArea(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -24,7 +28,7 @@ class PlayerWidget extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${episode.episodeId}-${episode.episodeName}",
+                  episode.episodeName,
                   style: TextStyle(color: darknetWhite),
                 ),
               ],
@@ -33,14 +37,17 @@ class PlayerWidget extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
+                  splashColor: darkDarknetRed,
+                  splashRadius: 30,
                   onPressed: () {
                     ref
-                        .watch(playerNotifierProvider.notifier)
-                        .getPlayingEpisodes(episode);
+                        .read(playerNotifierProvider.notifier)
+                        .togglePlayback(episode);
                   },
-                  icon: ref.watch(playerNotifierProvider.notifier).build()
-                      ? Icon(Icons.pause, color: darknetWhite)
-                      : Icon(Icons.play_arrow, color: darknetWhite),
+                  icon: Icon(
+                    isPlaying ? Icons.pause : Icons.play_arrow,
+                    color: darknetWhite,
+                  ),
                 ),
               ],
             )

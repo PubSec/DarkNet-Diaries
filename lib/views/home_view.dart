@@ -1,6 +1,7 @@
 import 'package:darknet_diaries/core/constant.dart';
 import 'package:darknet_diaries/model/episode_model.dart';
 import 'package:darknet_diaries/providers/episode_provider.dart';
+import 'package:darknet_diaries/views/play_view.dart';
 import 'package:darknet_diaries/widgets/player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,8 +20,19 @@ class _HomeViewState extends ConsumerState<HomeView> {
         ref.watch(episodeNotifierProvider.notifier).getEpisodes();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlayView(),
+                ),
+              );
+            },
+            icon: Icon(Icons.padding),
+          )
+        ],
         title: Text(
           'Darknet Diaries',
           style: TextStyle(

@@ -46,7 +46,7 @@ class PlayerWidget extends ConsumerWidget {
                   },
                   icon: Icon(
                     isPlaying ? Icons.pause : Icons.play_arrow,
-                    color: darknetWhite,
+                    color: Colors.white,
                   ),
                 ),
               ],
